@@ -1,23 +1,23 @@
-import os
-import setuptools
+from setuptools import setup
 
-module_path = os.path.join(os.path.dirname(__file__), '__init__.py')
-version_line = [line for line in open(module_path) if line.startswith('__version__')][0]
 
-__version__ = version_line.split('__version__ = ')[-1][1:][:-2]
-
-setuptools.setup(
+setup(
     name="flask-restplus-marshmallow",
-    version=__version__,
+    version='0.1.0',
     url="https://github.com/joeyorlando/flask-restplus-marshmallow",
     author="Joey Orlando",
     author_email="joey@100danish.com",
     description="Flask RESTPlus with a twist of marshmallow",
     long_description=open('README.md').read(),
-    py_modules=['__init__'],
+    packages=['flask_restplus_patched']
     zip_safe=False,
     platforms='any',
-    install_requires=[],
+    install_requires=[
+        'flask',
+        'flask-marshmallow',
+        'webargs',
+        'flask-restplus'
+    ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Environment :: Web Environment',
