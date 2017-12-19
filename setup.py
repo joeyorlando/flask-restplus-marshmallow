@@ -13,7 +13,7 @@ setuptools.setup(
     author="Joey Orlando",
     author_email="joey@100danish.com",
     description="Flask RESTPlus with a twist of marshmallow",
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
     py_modules=['__init__'],
     zip_safe=False,
     platforms='any',
