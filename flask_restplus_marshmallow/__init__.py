@@ -1,6 +1,6 @@
 from flask_restplus import *
 from .api import Api
-from .model import Schema, ModelSchema, DefaultHTTPErrorSchema
+from .model import Schema, DefaultHTTPErrorSchema
 from .namespace import Namespace
 from .parameters import Parameters, PostJSONParameters
 from .swagger import Swagger

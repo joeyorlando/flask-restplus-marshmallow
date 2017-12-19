@@ -1,4 +1,4 @@
-from flask_restplus Api as OriginalApi
+from flask_restplus import Api as OriginalApi
 from werkzeug import cached_property
 from .swagger import Swagger
 

@@ -5,7 +5,7 @@ from flask_restplus import abort, Namespace as OriginalNamespace
 from flask_restplus.utils import merge
 from webargs.flaskparser import FlaskParser
 from werkzeug import exceptions as http_exceptions
-from .model import Model
+from .model import Model, DefaultHTTPErrorSchema
 from ._http import HTTPStatus
 
 

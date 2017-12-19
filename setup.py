@@ -1,15 +1,17 @@
-from setuptools import setup
+from distutils.core import setup
 
 
 setup(
     name="flask-restplus-marshmallow",
-    version='0.1.0',
+    version='0.1.3',
     url="https://github.com/joeyorlando/flask-restplus-marshmallow",
     author="Joey Orlando",
     author_email="joey@100danish.com",
     description="Flask RESTPlus with a twist of marshmallow",
-    long_description=open('README.md').read(),
-    packages=['flask_restplus_patched']
+    long_description=open('README.rst').read(),
+    packages=[
+        'flask_restplus_marshmallow'
+    ],
     zip_safe=False,
     platforms='any',
     install_requires=[
