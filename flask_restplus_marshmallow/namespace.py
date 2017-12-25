@@ -80,7 +80,7 @@ class Namespace(OriginalNamespace):
             Endpoint parameters registration decorator
         """
         def decorator(func):
-            if locations is None and parameters.many:
+            if locations is None:
                 _locations = ('json', )
             else:
                 _locations = locations
@@ -154,13 +154,13 @@ class Namespace(OriginalNamespace):
                     _code = code
 
                 if HTTPStatus(_code) is code:
-                    response = model.dump(response).data
+                    response = {
+                        'errors': {},
+                        'data': model.dump(response).data,
+                        'message': description
+                    }
 
-                return {
-                    'errors': {},
-                    'data': response,
-                    'message': description
-                }, _code
+                return response, _code
 
             return dump_wrapper
 
