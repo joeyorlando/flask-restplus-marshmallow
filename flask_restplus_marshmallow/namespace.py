@@ -81,10 +81,10 @@ class Namespace(OriginalNamespace):
             Endpoint parameters registration decorator
         """
         def decorator(func):
-            if locations is None:
-                _locations = ('json', )
-            elif isinstance(parameters, Parameters):
+            if isinstance(parameters, Parameters):
                 _locations = (parameters.LOCATION,)
+            elif locations is None:
+                _locations = ('json', )
             else:
                 _locations = locations
             if _locations is not None:
