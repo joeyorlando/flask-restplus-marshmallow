@@ -6,6 +6,7 @@ class Parameters(Schema):
 
     class Meta:
         ordered = True
+        strict = False
 
     def __init__(self, **kwargs):
         super(Parameters, self).__init__(**kwargs)
