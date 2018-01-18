@@ -4,22 +4,14 @@ from flask_marshmallow import Schema
 
 class Parameters(Schema):
 
-    LOCATION = 'json'
-
     class Meta:
         ordered = True
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super(Parameters, self).__init__(**kwargs)
 
         for required_field_name in getattr(self.Meta, 'required', []):
             self.fields[required_field_name].required = True
-
-        for field in itervalues(self.fields):
-            if field.dump_only:
-                continue
-            if not field.metadata.get('location'):
-                field.metadata['location'] = self.LOCATION
 
     def __contains__(self, field):
         return field in self.fields
@@ -38,6 +30,22 @@ class JSONParameters(Parameters):
 
     LOCATION = 'json'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in itervalues(self.fields):
+            if field.dump_only:
+                continue
+            if not field.metadata.get('location'):
+                field.metadata['location'] = self.LOCATION
+
 class QueryParameters(Parameters):
 
     LOCATION = 'query'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in itervalues(self.fields):
+            if field.dump_only:
+                continue
+            if not field.metadata.get('location'):
+                field.metadata['location'] = self.LOCATION
