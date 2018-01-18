@@ -19,6 +19,6 @@ class JSONParameters(Parameters):
 
     LOCATION = 'json'
 
-class QueryParameters(Schema):
+class QueryParameters(Parameters):
 
     LOCATION = 'query'

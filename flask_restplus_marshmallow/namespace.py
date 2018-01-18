@@ -87,6 +87,7 @@ class Namespace(OriginalNamespace):
                 _locations = ('json', )
             else:
                 _locations = locations
+
             if _locations is not None:
                 parameters.context['in'] = _locations
 
