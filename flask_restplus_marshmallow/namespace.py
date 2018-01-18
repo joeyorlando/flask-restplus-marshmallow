@@ -84,7 +84,7 @@ class Namespace(OriginalNamespace):
             if locations is None:
                 _locations = ('json', )
             elif isinstance(parameters, Parameters):
-                _locations = parameters.LOCATION
+                _locations = (parameters.LOCATION,)
             else:
                 _locations = locations
             if _locations is not None:
