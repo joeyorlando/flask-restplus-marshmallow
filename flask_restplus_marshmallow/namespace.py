@@ -103,10 +103,7 @@ class Namespace(OriginalNamespace):
             if _locations is not None:
                 parameters.context['in'] = _locations
 
-            print('AYYYY GUY', self, parameters, self.WEBARGS_PARSER.use_args(parameters, locations=_locations)(
-                func
-            ))
-            print(args, kwargs, 'AY GUY ASDFASDF')
+            print('YO GUY', args, kwargs)
 
             return self.doc(params=parameters)(
                 self.response(code=HTTPStatus.BAD_REQUEST, description=description)(
