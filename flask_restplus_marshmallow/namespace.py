@@ -28,8 +28,8 @@ class CustomWebargsParser(FlaskParser):
 
 class Namespace(OriginalNamespace):
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.DB_CONTEXT = kwargs.get("db_context")
 
     WEBARGS_PARSER = CustomWebargsParser()
