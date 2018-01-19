@@ -8,7 +8,7 @@ class Parameters(Schema):
         ordered = True
 
     def __init__(self, **kwargs):
-        super(Parameters, self).__init__(strict=True, **kwargs)
+        super(Parameters, self).__init__(strict=kwargs.get("strict", True), **kwargs)
 
         for required_field_name in getattr(self.Meta, 'required', []):
             self.fields[required_field_name].required = True
