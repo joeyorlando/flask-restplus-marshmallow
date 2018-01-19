@@ -92,7 +92,7 @@ class Namespace(OriginalNamespace):
         """
             Endpoint parameters registration decorator
         """
-        def decorator(func):
+        def decorator(func, *args, **kwargs):
             if isinstance(parameters, Parameters):
                 _locations = (parameters.LOCATION,)
             elif locations is None:
@@ -106,6 +106,7 @@ class Namespace(OriginalNamespace):
             print('AYYYY GUY', self, parameters, self.WEBARGS_PARSER.use_args(parameters, locations=_locations)(
                 func
             ))
+            print(args, kwargs, 'AY GUY ASDFASDF')
 
             return self.doc(params=parameters)(
                 self.response(code=HTTPStatus.BAD_REQUEST, description=description)(
