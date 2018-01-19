@@ -149,12 +149,12 @@ class Namespace(OriginalNamespace):
         if description is None:
             description = code.description
 
-        # @self.DB_CONTEXT
         def response_serializer_decorator(func):
             """
             This decorator handles responses to serialize the returned value
             with a given model.
             """
+            @self.DB_CONTEXT
             def dump_wrapper(*args, **kwargs):
                 # pylint: disable=missing-docstring
                 response = func(*args, **kwargs)
