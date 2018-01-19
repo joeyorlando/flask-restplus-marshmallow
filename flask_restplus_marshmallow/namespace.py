@@ -62,13 +62,13 @@ class Namespace(OriginalNamespace):
                 return func_or_class
 
             @wraps(func_or_class)
+            @self.DB_CONTEXT
             def wrapper(*args, **kwargs):
-                with self.DB_CONTEXT:
-                    kwargs[object_arg_name] = resolver(kwargs)
-
+                kwargs[object_arg_name] = resolver(kwargs)
                 return self.response(code=HTTPStatus.NOT_FOUND, description=msg_404)(
                     func_or_class(*args, **kwargs)
                 )
+
             return wrapper
         return decorator
 
@@ -145,6 +145,7 @@ class Namespace(OriginalNamespace):
         if description is None:
             description = code.description
 
+        @self.DB_CONTEXT
         def response_serializer_decorator(func):
             """
             This decorator handles responses to serialize the returned value
@@ -166,12 +167,11 @@ class Namespace(OriginalNamespace):
                     _code = code
 
                 if HTTPStatus(_code) is code:
-                    with self.DB_CONTEXT:
-                        response = {
-                            'errors': {},
-                            'data': model.dump(response).data,
-                            'message': description
-                        }
+                    response = {
+                        'errors': {},
+                        'data': model.dump(response).data,
+                        'message': description
+                    }
 
                 return response, _code
 
