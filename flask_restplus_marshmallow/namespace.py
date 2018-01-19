@@ -64,8 +64,13 @@ class Namespace(OriginalNamespace):
             @wraps(func_or_class)
             @self.DB_CONTEXT
             def wrapper(*args, **kwargs):
-                kwargs[object_arg_name] = resolver(kwargs)
+                obj = resolver(kwargs)
+                if not obj:
+                    # if no object returned when resolving.. just immediately return a 404
+                    status = HTTPStatus(404)
+                    return abort(404, errors={}, message=msg_404 or status.description, data={})
 
+                kwargs[object_arg_name] = obj
                 return func_or_class(*args, **kwargs)
 
             return wrapper
