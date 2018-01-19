@@ -149,7 +149,7 @@ class Namespace(OriginalNamespace):
         if description is None:
             description = code.description
 
-        @self.DB_CONTEXT
+        # @self.DB_CONTEXT
         def response_serializer_decorator(func):
             """
             This decorator handles responses to serialize the returned value
@@ -214,7 +214,7 @@ class Namespace(OriginalNamespace):
                 )
             return doc_decorator(decorated_func_or_class)
 
-        return decorator
+        return self.DB_CONTEXT(decorator)
 
     def preflight_options_handler(self, func):
 
