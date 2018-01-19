@@ -28,6 +28,10 @@ class CustomWebargsParser(FlaskParser):
 
 class Namespace(OriginalNamespace):
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.DB_CONTEXT = kwargs.get("db_context")
+
     WEBARGS_PARSER = CustomWebargsParser()
 
     def _handle_api_doc(self, cls, doc):
@@ -36,7 +40,7 @@ class Namespace(OriginalNamespace):
             return
         cls.__apidoc__ = merge(getattr(cls, '__apidoc__', {}), doc)
 
-    def resolve_object(self, object_arg_name, resolver):
+    def resolve_object(self, object_arg_name, msg_404, resolver):
         """
         A helper decorator to resolve object instance from arguments (e.g. identity).
 
@@ -59,8 +63,12 @@ class Namespace(OriginalNamespace):
 
             @wraps(func_or_class)
             def wrapper(*args, **kwargs):
-                kwargs[object_arg_name] = resolver(kwargs)
-                return func_or_class(*args, **kwargs)
+                with self.DB_CONTEXT:
+                    kwargs[object_arg_name] = resolver(kwargs)
+
+                return self.response(code=HTTPStatus.NOT_FOUND, description=msg_404)(
+                    func_or_class(*args, **kwargs)
+                )
             return wrapper
         return decorator
 
@@ -158,11 +166,12 @@ class Namespace(OriginalNamespace):
                     _code = code
 
                 if HTTPStatus(_code) is code:
-                    response = {
-                        'errors': {},
-                        'data': model.dump(response).data,
-                        'message': description
-                    }
+                    with self.DB_CONTEXT:
+                        response = {
+                            'errors': {},
+                            'data': model.dump(response).data,
+                            'message': description
+                        }
 
                 return response, _code
 

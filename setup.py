@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name="flask-restplus-marshmallow",
-    version='0.1.20',
+    version='0.1.21',
     url="https://github.com/joeyorlando/flask-restplus-marshmallow",
     author="Joey Orlando",
     author_email="joey@100danish.com",
