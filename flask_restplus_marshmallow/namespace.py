@@ -65,9 +65,11 @@ class Namespace(OriginalNamespace):
             @self.DB_CONTEXT
             def wrapper(*args, **kwargs):
                 kwargs[object_arg_name] = resolver(kwargs)
-                return self.response(code=HTTPStatus.NOT_FOUND, description=msg_404)(
-                    func_or_class(*args, **kwargs)
-                )
+
+                return func_or_class(*args, **kwargs)
+                # return self.response(code=HTTPStatus.NOT_FOUND, description=msg_404)(
+                #     func_or_class(*args, **kwargs)
+                # )
 
             return wrapper
         return decorator
