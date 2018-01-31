@@ -158,6 +158,11 @@ class Namespace(OriginalNamespace):
             def dump_wrapper(*args, **kwargs):
                 # pylint: disable=missing-docstring
                 response = func(*args, **kwargs)
+                meta = {}
+
+                if type(response) is dict and response.get("meta"):
+                    meta = response.get("meta", {})
+                    response = response.get("data", {})
 
                 if response is None:
                     if model is not None:
@@ -174,7 +179,8 @@ class Namespace(OriginalNamespace):
                     response = {
                         'errors': {},
                         'data': model.dump(response).data,
-                        'message': description
+                        'message': description,
+                        **meta
                     }
 
                 return response, _code
