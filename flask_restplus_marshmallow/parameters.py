@@ -40,3 +40,7 @@ class JSONParameters(Parameters):
 class QueryParameters(Parameters):
 
     LOCATION = 'query'
+
+class HeaderParameters(Parameters):
+
+    LOCATION = 'query'
