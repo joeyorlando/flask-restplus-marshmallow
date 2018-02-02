@@ -43,4 +43,8 @@ class QueryParameters(Parameters):
 
 class HeaderParameters(Parameters):
 
-    LOCATION = 'query'
+    LOCATION = 'headers'
+
+class FileParameters(Parameters):
+
+    LOCATION = 'files'
