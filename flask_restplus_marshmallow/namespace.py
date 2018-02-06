@@ -93,19 +93,11 @@ class Namespace(OriginalNamespace):
             Endpoint parameters registration decorator
         """
         def decorator(func):
-            if isinstance(parameters, Parameters):
-                _locations = (parameters.LOCATION,)
-            elif locations is None:
-                _locations = ('json', )
-            else:
-                _locations = locations
-
-            if _locations is not None:
-                parameters.context['in'] = _locations
+            parameters.context['in'] = parameters.LOCATION
 
             return self.doc(params=parameters)(
                 self.response(code=HTTPStatus.BAD_REQUEST, description=description)(
-                    self.WEBARGS_PARSER.use_args(parameters, locations=_locations)(
+                    self.WEBARGS_PARSER.use_args(parameters, locations=parameters.LOCATION)(
                         func
                     )
                 )
