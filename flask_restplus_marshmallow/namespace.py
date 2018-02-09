@@ -93,11 +93,19 @@ class Namespace(OriginalNamespace):
             Endpoint parameters registration decorator
         """
         def decorator(func):
-            parameters.context['in'] = parameters.LOCATION
+            if isinstance(parameters, Parameters):
+                _locations = (parameters.LOCATION,)
+            elif locations is None:
+                _locations = ('json', )
+            else:
+                _locations = locations
+
+            if _locations is not None:
+                parameters.context['in'] = _locations
 
             return self.doc(params=parameters)(
                 self.response(code=HTTPStatus.BAD_REQUEST, description=description)(
-                    self.WEBARGS_PARSER.use_args(parameters, locations=parameters.LOCATION)(
+                    self.WEBARGS_PARSER.use_args(parameters, locations=_locations)(
                         func
                     )
                 )
@@ -157,8 +165,6 @@ class Namespace(OriginalNamespace):
                     response = response.get("data", {})
 
                 if response is None:
-                    if model is not None:
-                        raise ValueError("Response cannot not be None with HTTP status %d" % code)
                     return flask.Response(status=code)
                 elif isinstance(response, flask.Response) or model is None:
                     return response
