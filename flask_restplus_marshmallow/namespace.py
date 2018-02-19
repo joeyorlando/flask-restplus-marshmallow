@@ -30,6 +30,8 @@ class Namespace(OriginalNamespace):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.DATA_ENVELOPE_KEYS = kwargs.get("data_envelope_keys")
         self.DB_CONTEXT = kwargs.get("db_context")
 
     WEBARGS_PARSER = CustomWebargsParser()
@@ -113,7 +115,7 @@ class Namespace(OriginalNamespace):
 
         return decorator
 
-    def response(self, model=None, code=HTTPStatus.OK, description=None, data_envelope_keys=None, **kwargs):
+    def response(self, model=None, code=HTTPStatus.OK, description=None, **kwargs):
         """
         Endpoint response OpenAPI documentation decorator.
 
@@ -174,11 +176,11 @@ class Namespace(OriginalNamespace):
                     _code = code
 
                 if HTTPStatus(_code) is code:
-                    if data_envelope_keys:
+                    if self.DATA_ENVELOPE_KEYS:
                         _data = meta
 
                         model_is_many = getattr(model, 'many', False)
-                        data_envelope_key = data_envelope_keys['many'] if model_is_many else data_envelope_keys['single']
+                        data_envelope_key = self.DATA_ENVELOPE_KEYS['many'] if model_is_many else self.DATA_ENVELOPE_KEYS['single']
 
                         if model_is_many:
                             _data.update({
