@@ -176,7 +176,7 @@ class Namespace(OriginalNamespace):
                 if HTTPStatus(_code) is code:
                     _data = {**model.dump(response).data, **meta}
                     if data_envelope_keys:
-                        model_is_many = getattr(model, 'many', False):
+                        model_is_many = getattr(model, 'many', False)
                         data_envelope_key = data_envelope_keys['many'] if model_is_many else data_envelope_keys['single']
 
                         data = {data_envelope_key: _data}
