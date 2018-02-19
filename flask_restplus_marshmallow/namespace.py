@@ -113,7 +113,7 @@ class Namespace(OriginalNamespace):
 
         return decorator
 
-    def response(self, model=None, code=HTTPStatus.OK, description=None, **kwargs):
+    def response(self, model=None, code=HTTPStatus.OK, description=None, data_envelope_keys=None, **kwargs):
         """
         Endpoint response OpenAPI documentation decorator.
 
@@ -174,11 +174,19 @@ class Namespace(OriginalNamespace):
                     _code = code
 
                 if HTTPStatus(_code) is code:
+                    _data = {**model.dump(response).data, **meta}
+                    if data_envelope_keys:
+                        model_is_many = getattr(model, 'many', False):
+                        data_envelope_key = data_envelope_keys['many'] if model_is_many else data_envelope_keys['single']
+
+                        data = {data_envelope_key: _data}
+                    else:
+                        data = _data
+
                     response = {
                         'errors': {},
-                        'data': model.dump(response).data,
-                        'message': description,
-                        **meta
+                        'data': data,
+                        'message': description
                     }
 
                 return response, _code
