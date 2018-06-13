@@ -48,3 +48,7 @@ class HeaderParameters(Parameters):
 class FileParameters(Parameters):
 
     LOCATION = 'files'
+
+class FormParameters(Parameters):
+
+    LOCATION = 'form'
