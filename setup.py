@@ -8,7 +8,8 @@ setup(
     author="Joey Orlando",
     author_email="joey@100danish.com",
     description="Flask RESTPlus with a twist of marshmallow",
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown'
     packages=[
         'flask_restplus_marshmallow'
     ],
