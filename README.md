@@ -1,5 +1,7 @@
 # Flask RESTPlus + Marshmallow
 
+This project is a bit outdated and isn't getting the TLC it needs. If someone would like to take over the reigns of maintaining it feel free to contact me 🙏
+
 
 ## Synposis
 This library serves as an amalgamation between [Flask-RESTPlus](https://flask-restplus.readthedocs.io/en/stable/) and [Marshmallow](https://marshmallow.readthedocs.io/en/3.0/), allowing you to use Marshmallow schemas to define Swagger API schema, as well as handle request validation and response marshalling.
